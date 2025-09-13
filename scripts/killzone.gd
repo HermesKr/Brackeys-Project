@@ -5,8 +5,7 @@ extends Area2D
 func _on_body_entered(body):
 	if body.is_in_group("player"):
 		Engine.time_scale = 0.7
-		body.is_alive = false
-		#body.get_node("CollisionShape2D").queue_free()
+		body.state = body.PlayerState.DEAD
 		timer.start()
 
 
