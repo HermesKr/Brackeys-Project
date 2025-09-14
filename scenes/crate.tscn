@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1tkiwydbde58"]
+
+[ext_resource type="Texture2D" uid="uid://ba48hjnhp1xyw" path="res://assets/sprites/crate.png" id="1_0hp5a"]
+[ext_resource type="Script" path="res://scripts/crate.gd" id="1_op00n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kibw4"]
+size = Vector2(14, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_07nn1"]
+size = Vector2(20, 18)
+
+[node name="Crate" type="CharacterBody2D" groups=["pickable"]]
+collision_layer = 8
+script = ExtResource("1_op00n")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0hp5a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_kibw4")
+
+[node name="HurtboxArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 4
+
+[node name="Hurtbox" type="CollisionShape2D" parent="HurtboxArea"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_07nn1")
+
+[connection signal="body_entered" from="HurtboxArea" to="." method="_on_hurtbox_area_body_entered"]

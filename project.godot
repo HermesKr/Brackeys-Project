@@ -62,6 +62,8 @@ duck={
 2d_physics/layer_1="environment"
 2d_physics/layer_2="player"
 2d_physics/layer_3="enemies"
+2d_physics/layer_4="collectibles"
+2d_physics/layer_5="pickupables"
 
 [rendering]
 
