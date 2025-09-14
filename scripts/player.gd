@@ -83,11 +83,19 @@ func _unhandled_input(event):
 func throw_crate():
 	var crate: Crate = held_crate
 	
+	var throw_direction := Vector2.ZERO
+	if Input.is_action_pressed("look_up"):
+		throw_direction = Vector2(0, -1)
+	elif Input.is_action_pressed("duck"):
+		throw_direction = Vector2.ZERO
+	else:
+		throw_direction = Vector2(direction, -0.5)
+	
 	held_crate.get_parent().remove_child(held_crate)
 	held_crate = null
 	get_tree().current_scene.add_child(crate)
 	crate.global_position = held_item_location.global_position
-	crate.set_thrown_state(direction)
+	crate.set_thrown_state(throw_direction)
 
 func try_pickup_crate():
 	var crates = pickup_area.get_overlapping_bodies()

@@ -101,6 +101,7 @@ animation = &"death"
 autoplay = "walking"
 
 [node name="Killzone" parent="." instance=ExtResource("2_kg3ym")]
+unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
 position = Vector2(0, -8)

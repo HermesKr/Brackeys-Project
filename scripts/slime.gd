@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var ray_cast_ledge_right = $RayCastLedgeRight
 @onready var ray_cast_ledge_left = $RayCastLedgeLeft
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var killzone = %Killzone
 
 enum EnemyState { ALIVE, DEAD }
 
@@ -58,6 +59,7 @@ func flip_direction():
 	ledge_check_enabled = true
 
 func die():
+	killzone.monitoring = false
 	state = EnemyState.DEAD
 	set_collision_layer(0)
 	set_collision_mask(0)

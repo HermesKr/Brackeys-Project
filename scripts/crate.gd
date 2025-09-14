@@ -2,9 +2,8 @@ class_name Crate extends CharacterBody2D
 
 @onready var hurtbox_area = $HurtboxArea
 
-const THROW_SPEED_X = 400
-const THROW_SPEED_Y = -150
 const DECELERATION = 600
+const THROW_FORCE = 350
 
 enum CrateState { IDLE, HELD, THROWN }
 var state: CrateState = CrateState.IDLE
@@ -18,16 +17,15 @@ func _process(delta):
 	if state == CrateState.THROWN:
 		velocity.x = move_toward(velocity.x, 0, DECELERATION * delta)
 	
-	if state == CrateState.THROWN and abs(velocity.x) < 5:
+	if state == CrateState.THROWN and velocity.length() < 10 and is_on_floor():
 		set_idle_state()
-	
+	print(velocity.length())
 	move_and_slide()
 
 func set_held_state():
 	state = CrateState.HELD
 	velocity = Vector2.ZERO
 	
-	# the environment layer is 1
 	hurtbox_area.monitoring = false
 
 func set_idle_state():
@@ -35,16 +33,16 @@ func set_idle_state():
 	hurtbox_area.monitoring = false
 	velocity = Vector2.ZERO
 
-func set_thrown_state(direction: int):
+
+func set_thrown_state(direction: Vector2):
 	state = CrateState.THROWN
-	velocity = Vector2(THROW_SPEED_X * direction, THROW_SPEED_Y)
+	velocity = direction.normalized() * THROW_FORCE
+	print(velocity)
 	hurtbox_area.monitoring = true
 	hurtbox_area.set_collision_mask_value(3, true)
 	set_collision_layer(8)
 	set_collision_mask(1)
 
-
 func _on_hurtbox_area_body_entered(body):
-	print("ouch!")
 	if state == CrateState.THROWN and body.is_in_group("enemy"):
 		body.die()
